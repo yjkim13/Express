@@ -1,11 +1,25 @@
 const express = require('express') //comst 상수
 const app = express() //express는 함수다.
 const port = 3000
+const fs = require('fs');
+const template = require('./lib/template.js');
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-}) //route, routing
 
+
+app.get('/', (request, response) => {
+  fs.readdir(`./data`,function(err,filelist){
+    var title = `Welcome`
+    var description = 'Hello, Node.js'
+
+    var list = template.list(filelist);
+    var html = template.HTML(title,list,
+      `<h2>${title}</h2>${description}`,
+      `<a href="/create">create</a>`
+    );
+    response.send(html);
+  });  
+   //route, routing
+});
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
