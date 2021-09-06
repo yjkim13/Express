@@ -5,7 +5,7 @@ const fs = require('fs');
 const template = require('./lib/template.js');
 
 
-
+//route, routing
 app.get('/', (request, response) => {
   fs.readdir(`./data`,function(err,filelist){
     var title = `Welcome`
@@ -18,8 +18,14 @@ app.get('/', (request, response) => {
     );
     response.send(html);
   });  
-   //route, routing
+
 });
+
+app.get('/page/:pageId', (request, response) => {
+  response.send(request.params);
+
+});
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
